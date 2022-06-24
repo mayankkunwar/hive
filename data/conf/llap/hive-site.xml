@@ -58,9 +58,15 @@
 
 <property>
   <name>hive.tez.container.size</name>
-  <value>128</value>
+  <value>1024</value>
   <description></description>
 </property>
+
+ <property>
+    <name>hive.in.ide.test</name>
+    <value>true</value>
+  </property>
+
 
 <property>
   <name>hive.stats.fetch.column.stats</name>
@@ -109,30 +115,90 @@
 
 <property>
   <name>javax.jdo.option.ConnectionURL</name>
-  <value>jdbc:derby:memory:${test.tmp.dir}/junit_metastore_db;create=true</value>
+  <value>jdbc:postgresql://localhost:5432/metastore_upstream</value>
+  <description>JDBC connect string for a JDBC metastore</description>
 </property>
 
 <property>
   <name>javax.jdo.option.ConnectionDriverName</name>
-  <value>org.apache.derby.jdbc.EmbeddedDriver</value>
+  <value>org.postgresql.Driver</value>
 </property>
 
 <property>
   <name>javax.jdo.option.ConnectionUserName</name>
-  <value>APP</value>
+  <value>hive</value>
 </property>
 
 <property>
   <name>javax.jdo.option.ConnectionPassword</name>
-  <value>mine</value>
+  <value>hive</value>
 </property>
 
 <property>
+    <name>metastore.metastore.event.db.notification.api.auth</name>
+    <value>false</value>
+  </property>
+
+<property>
   <!--  this should eventually be deprecated since the metastore should supply this -->
-  <name>hive.metastore.warehouse.dir</name>
-  <value>${test.warehouse.dir}</value>
+  <name>hive.metastore.warehouse.external.dir</name>
+  <value>/Users/mkunwar/workspace/hive-upstream/hivedata/warehouse</value>
   <description></description>
 </property>
+<property>
+    <name>hive.metastore.local</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://localhost:9083</value>
+  </property>
+
+<property>
+        <name>hive.txn.manager</name>
+        <value>org.apache.hadoop.hive.ql.lockmgr.DbTxnManager</value>
+    </property>
+
+     <property>
+        <name>hive.compactor.initiator.on</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>hive.compactor.worker.threads</name>
+        <value>3</value>
+    </property>
+
+    <property>
+      <name>metastore.compactor.worker.threads</name>
+      <value>4</value>
+    </property>
+
+    <property>
+        <name>hive.support.concurrency</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>hive.exec.dynamic.partition.mode</name>
+        <value>nonstrict</value>
+    </property>
+
+    <property>
+        <name>hive.lock.manager</name>
+        <value>org.apache.hadoop.hive.ql.lockmgr.DbLockManager</value>
+    </property>
+
+    <property>
+        <name>hive.compactor.crud.query.based</name>
+        <value>true</value>
+    </property>
+
+  <property>
+    <name>hive.metastore.runworker.in</name>
+    <value>hs2</value>
+  </property>
+
 
 <property>
   <name>hive.metastore.metadb.dir</name>
@@ -162,10 +228,21 @@
 
 <property>
   <name>hive.jar.path</name>
-  <value>${maven.local.repository}/org/apache/hive/hive-exec/${hive.version}/hive-exec-${hive.version}.jar</value>
-  <description></description>
+  <value>/Users/mkunwar/workspace/JIRA/hive-25351/apache/hive/ql/target/hive-exec-4.0.0-alpha-2-SNAPSHOT.jar</value>
+  <description>The location of hive_cli.jar that is used when submitting jobs in a separate jvm.</description>
 </property>
-
+<property>
+    <name>hive.hadoop.classpath</name>
+    <value>/Users/mkunwar/workspace/JIRA/hive-25351/apache/hive/ql/target/hive-exec-4.0.0-alpha-2-SNAPSHOT.jar</value>
+</property>
+<property>
+  <name>hive.server2.webui.port</name>
+  <value>11805</value>
+</property>
+<property>
+  <name>hive.server2.enable.doAs</name>
+  <value>false</value>
+</property>
 <property>
   <name>hive.metastore.rawstore.impl</name>
   <value>org.apache.hadoop.hive.metastore.ObjectStore</value>
@@ -192,7 +269,7 @@
 
 <property>
   <name>hive.support.concurrency</name>
-  <value>false</value>
+  <value>true</value>
   <description>Whether hive supports concurrency or not. A zookeeper instance must be up and running for the default hive lock manager to support read-write locks.</description>
 </property>
 

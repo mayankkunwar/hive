@@ -62,8 +62,9 @@ public class StartMiniHS2Cluster {
       break;
     }
     HiveConf conf = new HiveConf();
-    conf.setBoolVar(ConfVars.HIVE_SUPPORT_CONCURRENCY, false);
+    conf.setBoolVar(ConfVars.HIVE_SUPPORT_CONCURRENCY, true);
     conf.setBoolVar(HiveConf.ConfVars.HIVE_RPC_QUERY_PLAN, true);
+    conf.setVar(ConfVars.METASTOREURIS, "thrift://localhost:9083");
 
     for (; idx < confFiles.length; ++idx) {
       String confFile = confFiles[idx];
